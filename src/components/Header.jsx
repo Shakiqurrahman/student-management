@@ -1,12 +1,9 @@
-// import { BookOpenText, CircleUserRound } from "lucide-react";
-import { useContext } from "react";
-import { FaRegCircleUser } from "react-icons/fa6";
 import { LuBookOpenText } from "react-icons/lu";
 import { Link } from "react-router";
-import { ActiveContext } from "../context/ActiveProvider";
+import { useAuth } from "../context/ContextHooks";
 
 const Header = () => {
-  const { isActive, toggleHamburger } = useContext(ActiveContext);
+  const { isActive, toggleHamburger, user } = useAuth();
   return (
     <header className="h-24">
       <div className="border-b bg-white text-black fixed top-0 w-full z-50">
@@ -37,13 +34,7 @@ const Header = () => {
               placeholder="Search here..."
             />
           </div>
-          <Link
-            to={"#"}
-            className="py-2.5 px-6 border border-primary rounded-lg text-primary text-base font-medium flex items-center"
-          >
-            Login
-            <FaRegCircleUser className="ml-2 size-6" />
-          </Link>
+          <p>{user?.userName}</p>
         </div>
       </div>
     </header>

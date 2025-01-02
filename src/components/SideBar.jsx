@@ -1,15 +1,13 @@
-// import { BookCheck, ListChecks } from "lucide-react";
-import { useContext } from "react";
 import { BsListCheck } from "react-icons/bs";
 import { FaBook } from "react-icons/fa";
 import { LuBookCheck } from "react-icons/lu";
 import { MdDashboard } from "react-icons/md";
 import { PiStudentFill } from "react-icons/pi";
 import { NavLink } from "react-router";
-import { ActiveContext } from "../context/ActiveProvider";
+import { useAuth } from "../context/ContextHooks";
 
 const SideBar = () => {
-  const { isActive, toggleHamburger } = useContext(ActiveContext);
+  const { isActive, toggleHamburger } = useAuth();
   return (
     <aside className="lg:w-[240px]  relative">
       <ul

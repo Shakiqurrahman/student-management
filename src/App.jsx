@@ -2,15 +2,15 @@ import React from "react";
 import { RouterProvider } from "react-router";
 import Layout from "./AllRoutes/Layout";
 import { router } from "./AllRoutes/Routes";
-import { ActiveProvider } from "./context/ActiveProvider";
+import AppProviders from "./context/AppProviders";
 
 const App = () => {
   return (
-    <ActiveProvider>
+    <AppProviders>
       <RouterProvider router={router}>
         <Layout />
       </RouterProvider>
-    </ActiveProvider>
+    </AppProviders>
   );
 };
 

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
+import { useAuth } from "../context/ContextHooks";
 import useMutationApi from "../hooks/useMutationQuery";
 import { handleApiError } from "../utils/handleApiError";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -21,6 +23,7 @@ const LoginPage = () => {
       const response = await callMutation("/users/login", formData);
       console.log("submitted Data", response?.data);
       navigate("/");
+      setUser(response?.data);
 
       // Reset the form fields
       setFormData({
