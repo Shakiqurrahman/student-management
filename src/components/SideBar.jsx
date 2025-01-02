@@ -1,6 +1,8 @@
 // import { BookCheck, ListChecks } from "lucide-react";
 import { useContext } from "react";
+import { BsListCheck } from "react-icons/bs";
 import { FaBook } from "react-icons/fa";
+import { LuBookCheck } from "react-icons/lu";
 import { MdDashboard } from "react-icons/md";
 import { PiStudentFill } from "react-icons/pi";
 import { NavLink } from "react-router";
@@ -40,7 +42,7 @@ const SideBar = () => {
             className={` flex items-center gap-4 text-[#7e7e7e] text-xl  px-8 py-5 hover:text-primary duration-300`}
             onClick={toggleHamburger}
           >
-            {/* <ListChecks size={25} /> */}
+            <BsListCheck size={25} />
             Attendence
           </li>
         </NavLink>
@@ -49,7 +51,7 @@ const SideBar = () => {
             className={`} flex items-center gap-4 text-[#7e7e7e] text-xl  px-8 py-5 hover:text-primary duration-300`}
             onClick={toggleHamburger}
           >
-            {/* <BookCheck size={25} /> */}
+            <LuBookCheck size={25} />
             Results
           </li>
         </NavLink>

@@ -1,5 +1,7 @@
 // import { BookOpenText, CircleUserRound } from "lucide-react";
 import { useContext } from "react";
+import { FaRegCircleUser } from "react-icons/fa6";
+import { LuBookOpenText } from "react-icons/lu";
 import { Link } from "react-router";
 import { ActiveContext } from "../context/ActiveProvider";
 
@@ -21,7 +23,7 @@ const Header = () => {
           </div>
           <Link to="/">
             <div className="flex items-center gap-2">
-              {/* <BookOpenText className="text-primary size-10 sm:size-12" /> */}
+              <LuBookOpenText className="text-primary size-10 sm:size-12" />
               <div>
                 <h1 className="text-lg sm:text-2xl font-semibold">Dashboard</h1>
                 <p className="text-[12px] sm:text-sm">Student Management</p>
@@ -35,10 +37,13 @@ const Header = () => {
               placeholder="Search here..."
             />
           </div>
-          {/* <Button variant="login" size="md"> */}
-          Login
-          {/* <CircleUserRound className="ml-2 size-6" /> */}
-          {/* </Button> */}
+          <Link
+            to={"#"}
+            className="py-2.5 px-6 border border-primary rounded-lg text-primary text-base font-medium flex items-center"
+          >
+            Login
+            <FaRegCircleUser className="ml-2 size-6" />
+          </Link>
         </div>
       </div>
     </header>

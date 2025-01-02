@@ -50,7 +50,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .hamburger .line {
-  background: blue;
+  background: #7c3aed;
   display: block;
   height: 3px;
   border-radius: 3px;
@@ -81,12 +81,6 @@ body::-webkit-scrollbar-thumb:hover {
 .hamburger:hover .line {
   width: 26px;
 }
-
-/* 
-      .hamburger.active {
-        left: 60px;
-      }
-      */
 
 .hamburger.active .line:nth-child(1),
 .hamburger.active .line:nth-child(3) {
