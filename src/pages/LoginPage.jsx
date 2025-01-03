@@ -22,6 +22,11 @@ const LoginPage = () => {
     try {
       const response = await callMutation("/users/login", formData);
       console.log("submitted Data", response?.data);
+      // Save user data to localStorage
+      if (response?.data) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
+      
       navigate("/");
       setUser(response?.data);
 

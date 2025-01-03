@@ -1,4 +1,5 @@
 import React from "react";
+import { Toaster } from "react-hot-toast";
 import { RouterProvider } from "react-router";
 import Layout from "./AllRoutes/Layout";
 import { router } from "./AllRoutes/Routes";
@@ -9,6 +10,7 @@ const App = () => {
     <AppProviders>
       <RouterProvider router={router}>
         <Layout />
+        <Toaster position="top-center" />
       </RouterProvider>
     </AppProviders>
   );

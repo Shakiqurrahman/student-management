@@ -1,9 +1,11 @@
+import { IoIosLogOut } from "react-icons/io";
 import { LuBookOpenText } from "react-icons/lu";
 import { Link } from "react-router";
+import defaultAvatar from "../assets/no-profile-picture.svg";
 import { useAuth } from "../context/ContextHooks";
 
 const Header = () => {
-  const { isActive, toggleHamburger, user } = useAuth();
+  const { isActive, toggleHamburger, user, logout } = useAuth();
   return (
     <header className="h-24">
       <div className="border-b bg-white text-black fixed top-0 w-full z-50">
@@ -34,7 +36,21 @@ const Header = () => {
               placeholder="Search here..."
             />
           </div>
-          <p>{user?.userName}</p>
+          <div className="flex gap-2 items-center relative">
+            <h2 className="hidden md:block font-medium text-sm max-w-[200px] truncate">
+              {user?.userName}
+            </h2>
+            <img
+              className="flex-shrink-0 size-12 rounded-full bg-primary-300 object-center overflow-hidden  cursor-pointer"
+              src={user?.avatar ? user?.avatar : defaultAvatar}
+              alt={user?.fullName}
+            />
+            <IoIosLogOut
+              size={28}
+              className="ml-4 cursor-pointer"
+              onClick={logout}
+            />
+          </div>
         </div>
       </div>
     </header>

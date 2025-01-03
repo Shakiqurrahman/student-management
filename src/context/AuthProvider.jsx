@@ -1,12 +1,28 @@
 import { createContext, useState } from "react";
+import toast from "react-hot-toast";
+import { handleApiError } from "../utils/handleApiError";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const userFromLS = JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState(userFromLS || null);
+
   const [isActive, setIsActive] = useState(false);
 
-  const logout = () => setUser(null);
+  const logout = () => {
+    try {
+      localStorage.removeItem("user");
+      setUser(null);
+      window.location.href = "/login";
+      toast.success("Logged out successfully.");
+    } catch (error) {
+      const errorMessage = handleApiError(error);
+      console.log(errorMessage);
+      toast.error("Failed to logout. Please try again.");
+    }
+  };
+
   const toggleHamburger = () => setIsActive((prev) => !prev);
 
   return (
