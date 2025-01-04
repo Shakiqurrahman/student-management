@@ -1,8 +1,11 @@
 import { createBrowserRouter } from "react-router";
+import CreateStudent from "../pages/CreateStudent";
+import EditStudent from "../pages/EditStudent";
 import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
 import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
+import StudentPage from "../pages/StudentPage";
 import WaitingPage from "../pages/WaitingPage";
 import Layout from "./Layout";
 import ProtectedRoute from "./ProtectedRoute";
@@ -17,6 +20,30 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Home />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/students",
+        element: (
+          <ProtectedRoute>
+            <StudentPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/students/create",
+        element: (
+          <ProtectedRoute>
+            <CreateStudent />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/students/:id/edit",
+        element: (
+          <ProtectedRoute>
+            <EditStudent />
           </ProtectedRoute>
         ),
       },

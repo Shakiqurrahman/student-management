@@ -16,7 +16,7 @@ const useMutationApi = (defaultURL = config.API) => {
       const response = await axios({
         method,
         url: `${baseURL}${endpoint}`,
-        data: requestData,
+        data: requestData ? requestData : {},
         headers: {
           "Content-Type": "application/json",
           Authorization: token ? `Bearer ${token}` : "",

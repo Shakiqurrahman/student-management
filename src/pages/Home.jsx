@@ -1,8 +1,10 @@
 import { HiMiniUsers } from "react-icons/hi2";
+import useQueryApi from "../hooks/useQueryApi";
 
 export default function Home() {
+  const { data: totalStudents } = useQueryApi("/students/total");
   return (
-    <section className="h-[100vh]">
+    <section className="min-h-[calc(100vh_-_96px)]">
       <div className="flex justify-between mb-8">
         <div>
           <h1 className="text-3xl font-semibold">Dashboard</h1>
@@ -15,7 +17,9 @@ export default function Home() {
       </div>
       <div className="flex items-center justify-between p-8 bg-white w-[300px] rounded-2xl border border-input">
         <div>
-          <h2 className="text-4xl font-bold mb-2 text-center">100</h2>
+          <h2 className="text-4xl font-bold mb-2 text-center">
+            {totalStudents || 0}
+          </h2>
           <p className="text-base font-medium">Total Students</p>
         </div>
         <div>

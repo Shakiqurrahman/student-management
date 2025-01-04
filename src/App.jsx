@@ -10,8 +10,8 @@ const App = () => {
     <AppProviders>
       <RouterProvider router={router}>
         <Layout />
-        <Toaster position="top-center" />
       </RouterProvider>
+      <Toaster position="top-center" />
     </AppProviders>
   );
 };

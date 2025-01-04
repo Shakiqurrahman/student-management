@@ -104,3 +104,28 @@ body::-webkit-scrollbar-thumb:hover {
   -webkit-transform: translateY(-4px) rotate(-45deg);
   transform: translateY(-4px) rotate(-45deg);
 }
+
+/* Hide the number input spinner in webkit browsers (Chrome, Safari, Edge) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide the number input spinner in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Disable autofill background color and text color */
+input:-webkit-autofill {
+  background-color: transparent !important; /* Transparent background */
+  color: #333 !important; /* Set text color */
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Firefox autofill styles */
+input:-moz-autofill {
+  background-color: transparent !important; /* Transparent background */
+  color: #333 !important; /* Set text color */
+}

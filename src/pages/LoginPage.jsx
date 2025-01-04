@@ -6,7 +6,7 @@ import { handleApiError } from "../utils/handleApiError";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { setUser } = useAuth();
+  const { setUser, setToken } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -26,9 +26,10 @@ const LoginPage = () => {
       if (response?.data) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
-      
+
       navigate("/");
       setUser(response?.data);
+      setToken(response?.data?.accessToken);
 
       // Reset the form fields
       setFormData({

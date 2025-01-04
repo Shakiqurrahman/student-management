@@ -7,6 +7,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const userFromLS = JSON.parse(localStorage.getItem("user"));
   const [user, setUser] = useState(userFromLS || null);
+  const [token, setToken] = useState(userFromLS?.accessToken || null);
 
   const [isActive, setIsActive] = useState(false);
 
@@ -27,7 +28,15 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, logout, isActive, toggleHamburger }}
+      value={{
+        user,
+        setUser,
+        logout,
+        isActive,
+        toggleHamburger,
+        token,
+        setToken,
+      }}
     >
       {children}
     </AuthContext.Provider>
