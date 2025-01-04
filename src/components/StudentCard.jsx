@@ -6,7 +6,7 @@ import defaultAvatar from "../assets/no-profile-picture.svg";
 
 const StudentCard = ({ studentsData, handleDelete }) => {
   return (
-    <div className="w-full flex items-center gap-4 p-8 bg-white max-w-[700px] rounded-2xl border group relative overflow-hidden">
+    <div className="w-full flex flex-col sm:flex-row items-center gap-4 p-8 bg-white max-w-[700px] rounded-2xl border group relative overflow-hidden">
       <div className="absolute top-4 right-4 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-300 translate-x-[50px] group-hover:translate-x-0">
         <Link
           to={`${studentsData?._id}/edit`}
@@ -29,16 +29,17 @@ const StudentCard = ({ studentsData, handleDelete }) => {
         className="object-cover size-28 rounded-full"
       />
       <div>
-        <h3 className="text-lg line-clamp-1 font-semibold text-primary">
+        <h3 className="text-lg font-semibold text-primary">
           {studentsData?.fullName}
         </h3>
-        <p className="text-sm text-gray-500 line-clamp-5">
+        <p className="text-sm text-gray-500">Email : {studentsData?.email}</p>
+        <p className="text-sm text-gray-500">
           Department : {studentsData?.department}
         </p>
-        <p className="text-sm text-gray-500 line-clamp-5">
+        <p className="text-sm text-gray-500">
           Present Address : {studentsData?.presentAddress}
         </p>
-        <p className="text-sm text-gray-500 line-clamp-5">
+        <p className="text-sm text-gray-500">
           Contact No : {studentsData?.phone}
         </p>
       </div>

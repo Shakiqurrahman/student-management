@@ -1,9 +1,11 @@
 import { createBrowserRouter } from "react-router";
+import Attendence from "../pages/Attendence";
 import CreateStudent from "../pages/CreateStudent";
 import EditStudent from "../pages/EditStudent";
 import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
 import LoginPage from "../pages/LoginPage";
+import ResultsPage from "../pages/ResultsPage";
 import SignUpPage from "../pages/SignUpPage";
 import StudentPage from "../pages/StudentPage";
 import WaitingPage from "../pages/WaitingPage";
@@ -54,6 +56,22 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <WaitingPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/attendence",
+    element: (
+      <ProtectedRoute>
+        <Attendence />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/Results",
+    element: (
+      <ProtectedRoute>
+        <ResultsPage />
       </ProtectedRoute>
     ),
   },

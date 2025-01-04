@@ -1,7 +1,9 @@
+import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { CgSpinner } from "react-icons/cg";
 import { useLocation, useNavigate, useParams } from "react-router";
+import { config } from "../config/config";
 import { useAuth } from "../context/ContextHooks";
 import useMutationApi from "../hooks/useMutationQuery";
 
@@ -18,6 +20,7 @@ const EditStudent = () => {
     fullName: state?.fullName || "",
     email: state?.email || "",
     phone: state?.phone || "",
+    profile: state?.profile || "",
     gender: state?.gender || "",
     dateOfBirth: state?.dateOfBirth
       ? new Date(state?.dateOfBirth).toISOString().split("T")[0]
@@ -35,7 +38,7 @@ const EditStudent = () => {
   const [form, setForm] = useState(initialState);
 
   const [selectedAvatar, setSelectedAvatar] = useState(null);
-  const [profileUrl, setProfileUrl] = useState(state?.profile || "");
+  const [imageLoading, setImageLoading] = useState(false);
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
@@ -48,7 +51,10 @@ const EditStudent = () => {
 
   const handleRemoveAvatar = () => {
     setSelectedAvatar(null);
-    setProfileUrl(null);
+    setForm((prevForm) => ({
+      ...prevForm,
+      profile: "",
+    }));
   };
 
   const handleChange = (e) => {
@@ -74,6 +80,7 @@ const EditStudent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setImageLoading(true);
     // Validate required fields
     const { fullName, email, department, gender, dateOfBirth, phone, gurdian } =
       form;
@@ -108,6 +115,22 @@ const EditStudent = () => {
     }
 
     try {
+      if (selectedAvatar) {
+        const data = new FormData();
+        data.append("file", selectedAvatar);
+
+        const uploadResponse = await axios.post(
+          `${config.API}/students/upload`,
+          data,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+
+        if (uploadResponse?.data?.imageUrl) {
+          form.profile = uploadResponse.data.imageUrl;
+        } else {
+          throw new Error("Image upload failed");
+        }
+      }
       await callMutation(`/students/${id}`, form, {
         token,
         method: "PUT",
@@ -117,6 +140,7 @@ const EditStudent = () => {
       toast.error("Failed to update!");
     } finally {
       setSelectedAvatar(null);
+      setImageLoading(false);
     }
   };
 
@@ -254,13 +278,13 @@ const EditStudent = () => {
             <p className="line-clamp-1 font-ador">{selectedAvatar?.name}</p>
           </label>
         </div>
-        {(selectedAvatar || profileUrl) && (
+        {(selectedAvatar || form.profile) && (
           <div className="relative mt-5 text-center">
             <img
               src={
                 selectedAvatar && selectedAvatar instanceof File
                   ? URL.createObjectURL(selectedAvatar)
-                  : profileUrl
+                  : form.profile
               }
               alt={selectedAvatar?.name}
               className="mx-auto block size-[200px] rounded-full shadow-box object-cover mb-5"
@@ -394,10 +418,10 @@ const EditStudent = () => {
 
         <button
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || imageLoading}
           className="disabled:bg-primary-300 flex items-center justify-center w-full text-center h-11 bg-primary hover:bg-primary/80 text-white font-medium mt-5 duration-300 rounded select-none"
         >
-          {isLoading ? (
+          {isLoading || imageLoading ? (
             <CgSpinner className="animate-spin text-xl" />
           ) : (
             "Update"

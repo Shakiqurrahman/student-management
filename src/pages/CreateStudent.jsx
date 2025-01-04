@@ -1,7 +1,9 @@
+import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { CgSpinner } from "react-icons/cg";
 import { useNavigate } from "react-router";
+import { config } from "../config/config";
 import { useAuth } from "../context/ContextHooks";
 import useMutationApi from "../hooks/useMutationQuery";
 
@@ -14,6 +16,7 @@ const CreateStudent = () => {
     fullName: "",
     email: "",
     phone: "",
+    profile: "",
     gender: "",
     dateOfBirth: "",
     presentAddress: "",
@@ -27,6 +30,7 @@ const CreateStudent = () => {
   };
 
   const [form, setForm] = useState(initialState);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const [selectedAvatar, setSelectedAvatar] = useState(null);
 
@@ -66,6 +70,7 @@ const CreateStudent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setImageLoading(true);
     // Validate required fields
     const { fullName, email, department, gender, dateOfBirth, phone, gurdian } =
       form;
@@ -100,6 +105,22 @@ const CreateStudent = () => {
     }
 
     try {
+      if (selectedAvatar) {
+        const data = new FormData();
+        data.append("file", selectedAvatar);
+
+        const uploadResponse = await axios.post(
+          `${config.API}/students/upload`,
+          data,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+
+        if (uploadResponse?.data?.imageUrl) {
+          form.profile = uploadResponse.data.imageUrl;
+        } else {
+          throw new Error("Image upload failed");
+        }
+      }
       await callMutation("/students/create-student", form, {
         token,
       });
@@ -109,6 +130,7 @@ const CreateStudent = () => {
       navigate("/students");
       setForm(initialState);
       setSelectedAvatar(null);
+      setImageLoading(false);
     }
   };
 
@@ -382,10 +404,10 @@ const CreateStudent = () => {
 
         <button
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || imageLoading}
           className="disabled:bg-primary-300 flex items-center justify-center w-full text-center h-11 bg-primary hover:bg-primary/80 text-white font-medium mt-5 duration-300 rounded select-none"
         >
-          {isLoading ? (
+          {isLoading || imageLoading ? (
             <CgSpinner className="animate-spin text-xl" />
           ) : (
             "Create"
