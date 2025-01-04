@@ -189,8 +189,7 @@ const CreateStudent = () => {
             <option value="">Select Department</option>
             <option value="Computer Technology">Computer Technology</option>
             <option value="Electrical Technology">Electrical Technology</option>
-            <option value="Electrical Technology">Electrical Technology</option>
-            <option value="Electrical Technology">Electrical Technology</option>
+            <option value="Electrical Technology">Civil Technology</option>
             <option value="Electro-Medical Technology">
               Electro-Medical Technology
             </option>

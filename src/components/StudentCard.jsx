@@ -9,7 +9,7 @@ const StudentCard = ({ studentsData, handleDelete }) => {
     <div className="w-full flex flex-col sm:flex-row items-center gap-4 p-8 bg-white max-w-[700px] rounded-2xl border group relative overflow-hidden">
       <div className="absolute top-4 right-4 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-300 translate-x-[50px] group-hover:translate-x-0">
         <Link
-          to={`${studentsData?._id}/edit`}
+          to={`/students/${studentsData?._id}/edit`}
           state={studentsData}
           className="bg-white shadow-box rounded-sm size-8 text-black hover:text-blue-600 mb-2 flex items-center justify-center text-base hover:shadow-box-lg duration-300"
         >
