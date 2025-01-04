@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { CgSpinner } from "react-icons/cg";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../context/ContextHooks";
 import useMutationApi from "../hooks/useMutationQuery";
@@ -21,12 +23,12 @@ const LoginPage = () => {
 
     try {
       const response = await callMutation("/users/login", formData);
-      console.log("submitted Data", response?.data);
       // Save user data to localStorage
       if (response?.data) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
 
+      toast.success("Login Successfully!");
       navigate("/");
       setUser(response?.data);
       setToken(response?.data?.accessToken);
@@ -39,9 +41,6 @@ const LoginPage = () => {
     } catch (error) {
       const errorMessage = handleApiError(error);
       console.error(errorMessage);
-      // setError(errorMessage);
-    } finally {
-      // setIsLoading(false);
     }
   };
 
@@ -95,21 +94,19 @@ const LoginPage = () => {
               Show Password
             </label>
           </div>
-          <div>
+          {/* <div>
             <Link className="text-primary text-sm" to="#">
               Forgot Password?
             </Link>
-          </div>
+          </div> */}
         </div>
-        <div className="mt-4">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="bg-primary text-white py-2 w-full rounded-md font-medium disabled:opacity-70"
-          >
-            LOGIN
-          </button>
-        </div>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="disabled:bg-primary/80 flex items-center justify-center w-full text-center h-10 bg-primary hover:bg-primary/80 text-white font-medium duration-300 rounded select-none mt-4"
+        >
+          {isLoading ? <CgSpinner className="animate-spin text-xl" /> : "Login"}
+        </button>
 
         {error && (
           <p className="text-red-600 text-sm text-center mt-1">{error}</p>

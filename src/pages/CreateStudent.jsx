@@ -404,7 +404,7 @@ const CreateStudent = () => {
         <button
           type="submit"
           disabled={isLoading || imageLoading}
-          className="disabled:bg-primary-300 flex items-center justify-center w-full text-center h-11 bg-primary hover:bg-primary/80 text-white font-medium mt-5 duration-300 rounded select-none"
+          className="disabled:bg-primary/80 flex items-center justify-center w-full text-center h-11 bg-primary hover:bg-primary/80 text-white font-medium mt-5 duration-300 rounded select-none"
         >
           {isLoading || imageLoading ? (
             <CgSpinner className="animate-spin text-xl" />

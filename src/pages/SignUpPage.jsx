@@ -1,14 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import toast from "react-hot-toast";
+import { CgSpinner } from "react-icons/cg";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "../context/ContextHooks";
+import useMutationApi from "../hooks/useMutationQuery";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
+  const { setUser, setToken } = useAuth();
   const [formData, setFormData] = useState({
     fullName: "",
-    username: "",
+    userName: "",
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const { callMutation, isLoading, error } = useMutationApi();
 
   const handleInputChange = (e) => {
     setFormData({
@@ -17,18 +24,36 @@ const SignUpPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Add form submission logic here
-    console.log(formData);
+    try {
+      const response = await callMutation("/users/register", formData);
+      console.log("submitted Data", response?.data);
+      // Save user data to localStorage
+      if (response?.data) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
 
-    // Reset the form fields
-    setFormData({
-      fullName: "",
-      username: "",
-      email: "",
-      password: "",
-    });
+      toast.success("Sign Up Successfully!");
+      navigate("/");
+      setUser(response?.data);
+      setToken(response?.data?.accessToken);
+
+      // Reset the form fields
+      setFormData({
+        fullName: "",
+        userName: "",
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      console.error(error);
+      if (typeof error === "string") {
+        toast.error(error);
+      } else {
+        toast.error("An error occurred while signing up.");
+      }
+    }
   };
   return (
     <div className="flex justify-center items-center bg-gray-200 h-screen">
@@ -53,11 +78,11 @@ const SignUpPage = () => {
         <div className="mt-3">
           <input
             type="text"
-            name="username"
+            name="userName"
             onChange={handleInputChange}
-            value={formData.username}
+            value={formData.userName}
             className="border w-full px-3 py-2 outline-none  focus:border-primary duration-300 rounded-md"
-            placeholder="Username"
+            placeholder="userName"
             required
           />
         </div>
@@ -100,14 +125,17 @@ const SignUpPage = () => {
             </label>
           </div>
         </div>
-        <div className="mt-4">
-          <button
-            type="submit"
-            className="bg-primary text-white py-2 w-full rounded-md font-medium"
-          >
-            SIGN UP
-          </button>
-        </div>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="disabled:bg-primary/80 flex items-center justify-center w-full text-center h-10 bg-primary hover:bg-primary/80 text-white font-medium duration-300 rounded select-none mt-4"
+        >
+          {isLoading ? (
+            <CgSpinner className="animate-spin text-xl" />
+          ) : (
+            "Sign Up"
+          )}
+        </button>
 
         <div className="flex justify-center items-center gap-1 mt-2">
           <h1 className="text-gray-600 text-sm">Already have an account?</h1>
