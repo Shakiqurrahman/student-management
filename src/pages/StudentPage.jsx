@@ -3,12 +3,16 @@ import toast from "react-hot-toast";
 import { FiPlusCircle } from "react-icons/fi";
 import { Link } from "react-router";
 import StudentCard from "../components/StudentCard";
+import { useAuth } from "../context/ContextHooks";
 import useMutationApi from "../hooks/useMutationQuery";
 import useQueryApi from "../hooks/useQueryApi";
 import { handleApiError } from "../utils/handleApiError";
 
 const StudentPage = () => {
-  const { data: studentsData } = useQueryApi("/students");
+  const { searchParam } = useAuth();
+  const { data: studentsData } = useQueryApi(
+    `/students?searchTerm=${searchParam}`
+  );
   const { callMutation } = useMutationApi();
 
   const [students, setStudents] = useState(studentsData || []);

@@ -49,13 +49,16 @@ const RecentCreatedStudents = () => {
       </div>
 
       <div className="mt-4 grid md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
-        {students?.slice(-6).map((student, idx) => (
-          <StudentCard
-            key={idx}
-            studentsData={student}
-            handleDelete={handleDelete}
-          />
-        ))}
+        {students
+          ?.slice(-6)
+          .reverse()
+          .map((student, idx) => (
+            <StudentCard
+              key={idx}
+              studentsData={student}
+              handleDelete={handleDelete}
+            />
+          ))}
       </div>
     </section>
   );

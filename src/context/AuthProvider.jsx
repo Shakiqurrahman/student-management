@@ -9,6 +9,8 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(userFromLS || null);
   const [token, setToken] = useState(userFromLS?.accessToken || null);
 
+  const [searchParam, setSearchParam] = useState("");
+
   const [isActive, setIsActive] = useState(false);
 
   const logout = () => {
@@ -36,6 +38,8 @@ const AuthProvider = ({ children }) => {
         toggleHamburger,
         token,
         setToken,
+        searchParam,
+        setSearchParam,
       }}
     >
       {children}
